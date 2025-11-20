@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReinadoRPG - Servidor Medieval Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #c99a5b;
+            --accent-dark: #a87c4a;
+            --accent-light: #e6c9a0;
+            --dark-bg: #1a1612;
+            --darker-bg: #0f0c08;
+            --text: #f7f3ef;
+            --text-muted: #c8b9a8;
+            --glass: rgba(20, 15, 10, 0.7);
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Cinzel', serif;
+            color: var(--text);
+            background: url('https://static.vecteezy.com/ti/fotos-gratis/t2/54659403-uma-vibrante-e-colorida-minecraft-panorama-adornado-com-adoravel-coelhos-e-lindo-flores-foto.jpg') center/cover fixed no-repeat;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 8, 5, 0.7);
+            z-index: -1;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 10;
+        }
+        
+        header h1 {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 42px;
+            color: var(--accent);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+            margin: 0;
+            letter-spacing: 2px;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(201, 154, 91, 0.7); }
+            to { text-shadow: 0 0 15px rgba(201, 154, 91, 0.9), 0 0 20px rgba(201, 154, 91, 0.6); }
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a:hover {
+            background: rgba(201, 154, 91, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201, 154, 91, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        nav a:hover::before {
+            left: 100%;
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: none; }
+        }
+        
+        .panel {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(201, 154, 91, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+        }
+        
+        .panel h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 28px;
+            border-bottom: 1px solid rgba(201, 154, 91, 0.3);
+            padding-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .card {
+            flex: 1 1 280px;
+            background: linear-gradient(135deg, rgba(30,25,20,0.8), rgba(50,40,30,0.8));
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(201, 154, 91, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        
+        .muted {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .big {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-dark));
+            color: #1a1612;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border: 1px solid rgba(201, 154, 91, 0.3);
+        }
+        
+        .btn-whatsapp {
+            background: linear-gradient(to bottom, #25D366, #128C7E);
+            color: white;
+        }
+        
+        .players {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .players li {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        
+        .players li:hover {
+            transform: translateX(5px);
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .player-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #555;
+            margin-right: 12px;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        /* Seção de comandos */
+        .command-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+        
+        .command-item {
+            background: rgba(0,0,0,0.3);
+            padding: 18px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.3s;
+        }
+        
+        .command-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .command-name {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .command-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        
+        /* Seção de loja */
+        .kit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .kit-card {
+            background: linear-gradient(135deg, rgba(30,25,20,0.9), rgba(50,40,30,0.9));
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: transform 0.4s, box-shadow 0.4s;
+            position: relative;
+        }
+        
+        .kit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+        
+        .kit-header {
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .kit-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--accent-dark);
+        }
+        
+        .kit-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1a1612;
+            margin: 0;
+        }
+        
+        .kit-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #1a1612;
+        }
+        
+        .kit-content {
+            padding: 25px;
+        }
+        
+        .kit-items {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .kit-items li {
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(201, 154, 91, 0.2);
+            font-size: 14px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .kit-items li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        /* Seção de regras */
+        .rules-list {
+            counter-reset: rule-counter;
+        }
+        
+        .rule-item {
+            margin-bottom: 25px;
+            padding-left: 50px;
+            position: relative;
+        }
+        
+        .rule-item:before {
+            counter-increment: rule-counter;
+            content: counter(rule-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: #1a1612;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+        }
+        
+        .rule-title {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 25px;
+            background: rgba(0,0,0,0.6);
+            margin-top: 50px;
+            border-top: 1px solid rgba(201, 154, 91, 0.2);
+        }
+        
+        /* Animações extras */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+            
+            nav {
+                gap: 10px;
+            }
+            
+            nav a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            main {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            .panel {
+                padding: 20px;
+            }
+            
+            .command-list, .kit-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1 class="floating">ReinadoRPG</h1>
+        <nav>
+            <a href="#" class="nav-link active" data-target="home">Início</a>
+            <a href="#" class="nav-link" data-target="commands">Comandos</a>
+            <a href="#" class="nav-link" data-target="rules">Regras</a>
+            <a href="#" class="nav-link" data-target="store">Loja</a>
+            <a href="#" class="nav-link" data-target="support">Suporte</a>
+        </nav>
+    </header>
+    
+    <!-- Conteúdo Principal -->
+    <main>
+        <!-- Seção Início -->
+        <section id="home" class="section active">
+            <div class="panel">
+                <div class="row">
+                    <div class="card">
+                        <div class="muted">Java</div>
+                        <div class="big">reinadorpg.blazebr.com:29655</div>
+                        <div style="height: 12px;"></div>
+                        <div class="muted">Bedrock</div>
+                        <div class="big">reinadorpgmobile.blazebr.com — 29655</div>
+                    </div>
+                    <div class="card">
+                        <div class="muted">Status</div>
+                        <div id="statusText" class="big">Carregando...</div>
+                        <div style="height: 12px;"></div>
+                        <div id="playerCount" class="muted">- jogadores online</div>
+                        <div style="height: 15px;"></div>
+                        <a class="btn" href="https://discord.gg/5jvwssAV9t" target="_blank">Entrar no Discord</a>
+                        <a class="btn btn-secondary" href="https://chat.whatsapp.com/EyBu39XdT7LEYKy4OXibOp" target="_blank" style="margin-left: 10px;">Grupo WhatsApp</a>
+                    </div>
+                    <div class="card">
+                        <div class="muted">Ações Rápidas</div>
+                        <div style="height: 12px;"></div>
+                        <a class="btn" href="#" data-target="store">Comprar Kit</a>
+                        <a class="btn btn-secondary" href="#" data-target="support" style="margin-left: 10px;">Falar com Suporte</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Jogadores Online</h2>
+                <ul id="players" class="players">
+                    <li>Carregando lista de jogadores...</li>
+                </ul>
+            </div>
+            
+            <div class="panel">
+                <h2>Sobre o servidor</h2>
+                <p class="muted">Servidor RPG medieval com sistema de clãs, magias, pass premium e loja interna. PvP somente à noite. Explore um mundo vasto, enfrente desafios épicos e construa sua lenda!</p>
+            </div>
+        </section>
+        
+        <!-- Seção Comandos -->
+        <section id="commands" class="section">
+            <div class="panel">
+                <h2>Comandos do Servidor</h2>
+                <p class="muted" style="margin-bottom: 20px;">Abaixo estão os principais comandos disponíveis no ReinadoRPG. Use-os para explorar, interagir e aproveitar ao máximo sua experiência no servidor.</p>
+                
+                <div class="command-list">
+                    <div class="command-item">
+                        <div class="command-name">/register (senha) (senha)</div>
+                        <div class="command-desc">Registra sua conta no servidor pela primeira vez.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/login (senha)</div>
+                        <div class="command-desc">Faz login na sua conta quando você entrar no servidor.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/kit</div>
+                        <div class="command-desc">Abre a interface para selecionar e receber kits.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/spawn</div>
+                        <div class="command-desc">Teleporta você de volta para o spawn principal.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/pass</div>
+                        <div class="command-desc">Permite que você pegue o passe gratuito ou premium.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/rtp</div>
+                        <div class="command-desc">Teleporta você para um local aleatório no mundo.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/warp</div>
+                        <div class="command-desc">Abre a lista de locais públicos para onde você pode se teleportar.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/createhome (nome)</div>
+                        <div class="command-desc">Cria um ponto de teleporte (home) na sua localização atual.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/sethome (nome)</div>
+                        <div class="command-desc">Atualiza a localização de uma home existente.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/home (nome)</div>
+                        <div class="command-desc">Teleporta você para a home especificada.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/delhome (nome)</div>
+                        <div class="command-desc">Apaga uma de suas homes.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/g (mensagem)</div>
+                        <div class="command-desc">Envia uma mensagem no chat global.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/tell (jogador) (msg)</div>
+                        <div class="command-desc">Envia uma mensagem privada para outro jogador.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/afk</div>
+                        <div class="command-desc">Marca você como "Ausente" (Away From Keyboard), ou tira a marcação de ausencia.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/sit</div>
+                        <div class="command-desc">Permite que seu personagem se sente no chão.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/ignoreplayer (nome)</div>
+                        <div class="command-desc">Bloqueia todas as mensagens de um jogador específico.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/balance</div>
+                        <div class="command-desc">Mostra quanto dinheiro (money) você possui.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/balancetop</div>
+                        <div class="command-desc">Exibe a lista dos jogadores mais ricos do servidor.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/pay (jogador) (quantia)</div>
+                        <div class="command-desc">Paga uma quantia em dinheiro para outro jogador.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/sell (item) (quantia)</div>
+                        <div class="command-desc">Vende itens do seu inventário.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/sell blocks</div>
+                        <div class="command-desc">Vende blocos.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/clan menu</div>
+                        <div class="command-desc">Abre a interface principal de gerenciamento do seu clã.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/clan invite (jogador)</div>
+                        <div class="command-desc">Convida um jogador para o seu clã.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/clan accept</div>
+                        <div class="command-desc">Aceita um convite para entrar em um clã.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/clan deny</div>
+                        <div class="command-desc">Recusa um convite de clã.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/clan kick (jogador)</div>
+                        <div class="command-desc">Remove um membro do seu clã.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/clan setbase</div>
+                        <div class="command-desc">Define a base (home) do seu clã na sua localização.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/clan base</div>
+                        <div class="command-desc">Teleporta você para a base do seu clã.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/bendinggui</div>
+                        <div class="command-desc">Abre a interface de habilidades e magias.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/level</div>
+                        <div class="command-desc">Exibe seu nível atual e progresso.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/skin menu</div>
+                        <div class="command-desc">Abre o menu para alterar ou customizar sua skin.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/discord</div>
+                        <div class="command-desc">Mostra o link do Discord oficial do servidor.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/claim (nome)</div>
+                        <div class="command-desc">Possivelmente relacionado a proteger seu terreno.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/ping</div>
+                        <div class="command-desc">Testa sua latência (conexão) com o servidor. (Resposta: Pong!)</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/jukebox</div>
+                        <div class="command-desc">Permite tocar músicas com bloco de notas.</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-name">/helpop (mensagem)</div>
+                        <div class="command-desc">Envia uma mensagem de ajuda diretamente para a Staff online.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seção Regras -->
+        <section id="rules" class="section">
+            <div class="panel">
+                <h2>Regras, Leis e Normas</h2>
+                <p class="muted" style="margin-bottom: 20px;">Para garantir uma experiência justa e agradável para todos os jogadores, pedimos que siga estas regras. A violação pode resultar em punições, incluindo banimento permanente.</p>
+                
+                <div class="rules-list">
+                    <div class="rule-item">
+                        <div class="rule-title">1. Respeito Mútuo</div>
+                        <div class="rule-desc">Mantenha um ambiente amigável. É proibido o excesso de linguagem ofensiva (palavrões), flood, spam, e qualquer forma de assédio, preconceito ou desrespeito a outros jogadores ou à staff.</div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-title">2. Jogo Limpo (Sem Cheats)</div>
+                        <div class="rule-desc">É estritamente proibido o uso de hacks, clients alternativos (cheats), texturas (ex: X-Ray) ou qualquer modificação que conceda vantagens injustas sobre outros jogadores.</div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-title">3. Regras de PvP (Combate)</div>
+                        <div class="rule-desc">O combate Jogador vs. Jogador (PvP) é ativado apenas durante o período noturno no jogo. Lutar fora desse horário (exceto em áreas designadas) não é permitido. Esteja preparado para o anoitecer!</div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-title">4. Exploração de Bugs</div>
+                        <div class="rule-desc">É proibido abusar de bugs, falhas ou mecânicas não intencionais do servidor para benefício próprio. Se encontrar um bug, reporte imediatamente à Staff. Recompensa: Jogadores que reportarem falhas graves de forma correta serão recompensados pela sua honestidade!</div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-title">5. Denúncias e Alertas</div>
+                        <div class="rule-desc">Para denúncias (provas são necessárias), alertas importantes ou problemas graves, a forma mais rápida e segura de nos contatar é abrindo um ticket em nosso Discord oficial: <a href="https://discord.gg/5jvwssAV9t" target="_blank" style="color: var(--accent);">Clique aqui para ir ao Discord</a>.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seção Loja -->
+        <section id="store" class="section">
+            <div class="panel">
+                <h2>Loja de Kits</h2>
+                <p class="muted" style="margin-bottom: 20px;">Adquira kits especiais para melhorar sua experiência no servidor. Cada kit oferece vantagens únicas e itens exclusivos.</p>
+                
+                <div class="kit-grid">
+                    <!-- Kit VIP Cavaleiro do Futuro -->
+                    <div class="kit-card">
+                        <div class="kit-header">
+                            <h3 class="kit-name">VIP Cavaleiro do Futuro</h3>
+                            <div class="kit-price">R$ 50,00</div>
+                        </div>
+                        <div class="kit-content">
+                            <ul class="kit-items">
+                                <li>Armadura com todos os tipos de Proteção</li>
+                                <li>Reparação na armadura Inquebrável 4</li>
+                                <li>Totem (1)</li>
+                                <li>Pack (64) de frasco de XP</li>
+                                <li>8 blocos de ferro, esmeralda, ouro e lapis lazuli</li>
+                                <li>Casco de shulker (1)</li>
+                                <li>Pack (64) flechas</li>
+                                <li>33 barras de ferro</li>
+                                <li>20 lapis lazuli</li>
+                                <li>Pé de coelho e pele de coelho</li>
+                                <li>2 packs (128) de costela de porco</li>
+                            </ul>
+                            <a class="btn btn-whatsapp" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar o VIP Cavaleiro do Futuro no valor de R$ 50,00" target="_blank" style="width: 100%;">Comprar Agora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Pacotes de Passe</h2>
+                <div class="row">
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">Passe 1 Mês + Tag Bronze</h3>
+                        <p class="muted" style="margin-bottom: 15px;">Acesso premium por 1 mês + tag bronze por 7 dias.</p>
+                        <div class="big" style="margin-bottom: 15px;">R$ 30,00</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar o Passe 1 Mês + Tag Bronze no valor de R$ 30,00" target="_blank" style="width: 100%;">Comprar</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">Passe 5 Meses + Tag Ouro</h3>
+                        <p class="muted" style="margin-bottom: 15px;">Acesso premium por 5 meses + tag ouro por 3 meses.</p>
+                        <div class="big" style="margin-bottom: 15px;">R$ 150,00</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar o Passe 5 Meses + Tag Ouro no valor de R$ 150,00" target="_blank" style="width: 100%;">Comprar</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">Passe 1 Ano + Tag Legendária</h3>
+                        <p class="muted" style="margin-bottom: 15px;">Acesso premium por 1 ano + tag legendária permanente.</p>
+                        <div class="big" style="margin-bottom: 15px;">R$ 360,00</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar o Passe 1 Ano + Tag Legendária no valor de R$ 360,00" target="_blank" style="width: 100%;">Comprar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Desbanimento</h2>
+                <div class="row">
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">Desbanimento</h3>
+                        <p class="muted" style="margin-bottom: 15px;">Recupere o acesso ao servidor em caso de banimento.</p>
+                        <div class="big" style="margin-bottom: 15px;">R$ 15,00 - Negociável</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de solicitar um desbanimento" target="_blank" style="width: 100%;">Solicitar Unban</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Venda de Money</h2>
+                <div class="row">
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">100 BronzeCoins</h3>
+                        <div class="big" style="margin-bottom: 15px;">R$ 5,00</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 100 BronzeCoins no valor de R$ 5,00" target="_blank" style="width: 100%;">Comprar</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">574 BronzeCoins</h3>
+                        <div class="big" style="margin-bottom: 15px;">R$ 23,00</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 574 BronzeCoins no valor de R$ 23,00" target="_blank" style="width: 100%;">Comprar</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">1050 BronzeCoins</h3>
+                        <div class="big" style="margin-bottom: 15px;">R$ 46,90</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 1050 BronzeCoins no valor de R$ 46,90" target="_blank" style="width: 100%;">Comprar</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">2432 BronzeCoins</h3>
+                        <div class="big" style="margin-bottom: 15px;">R$ 120,00</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 2432 BronzeCoins no valor de R$ 120,00" target="_blank" style="width: 100%;">Comprar</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">5000 BronzeCoins</h3>
+                        <div class="big" style="margin-bottom: 15px;">R$ 345,00</div>
+                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 5000 BronzeCoins no valor de R$ 345,00" target="_blank" style="width: 100%;">Comprar</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seção Suporte -->
+        <section id="support" class="section">
+            <div class="panel">
+                <h2>Suporte</h2>
+                <p class="muted" style="margin-bottom: 20px;">Precisa de ajuda? Entre em contato conosco através dos canais abaixo.</p>
+                
+                <div class="row">
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">WhatsApp Direto</h3>
+                        <p class="muted" style="margin-bottom: 15px;">Para suporte direto e rápido, entre em contato pelo WhatsApp.</p>
+                        <a class="btn btn-whatsapp" href="https://wa.me/5514998199235" target="_blank" style="display: block; text-align: center;">Falar no WhatsApp</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">Discord</h3>
+                        <p class="muted" style="margin-bottom: 15px;">Para suporte da comunidade, entre em nosso servidor do Discord.</p>
+                        <a class="btn" href="https://discord.gg/5jvwssAV9t" target="_blank" style="display: block; text-align: center;">Entrar no Discord</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">Grupo WhatsApp</h3>
+                        <p class="muted" style="margin-bottom: 15px;">Participe do nosso grupo para conversar com outros jogadores.</p>
+                        <a class="btn btn-secondary" href="https://chat.whatsapp.com/EyBu39XdT7LEYKy4OXibOp" target="_blank" style="display: block; text-align: center;">Entrar no Grupo</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Perguntas Frequentes</h2>
+                
+                <div class="rule-item">
+                    <div class="rule-title">Como me registro no servidor?</div>
+                    <div class="rule-desc">Ao entrar no servidor pela primeira vez, use o comando <code>/register senha confirmar_senha</code> para criar sua conta.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-title">Como obtenho um kit?</div>
+                    <div class="rule-desc">Use o comando <code>/kit</code> para abrir a interface de kits. Kits gratuitos estão disponíveis, e kits premium podem ser adquiridos na loja.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-title">O PvP é sempre permitido?</div>
+                    <div class="rule-desc">Não, o PvP só é permitido durante a noite no jogo. Durante o dia, o PvP é desativado para permitir exploração e construção seguras.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-title">Como reportar um jogador?</div>
+                    <div class="rule-desc">Use o comando <code>/helpop</code> seguido da sua denúncia, ou abra um ticket em nosso Discord com provas (prints ou vídeos).</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 ReinadoRPG — Projeto by VictinnNoBeat</p>
+        <p class="muted" style="font-size: 12px; margin-top: 5px;">Todos os direitos reservados. Minecraft é uma marca registrada da Mojang AB.</p>
+    </footer>
+
+    <script>
+        // Navegação entre seções
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove a classe active de todos os links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                
+                // Adiciona a classe active ao link clicado
+                this.classList.add('active');
+                
+                // Oculta todas as seções
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Mostra a seção correspondente
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+                
+                // Scroll suave para o topo
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Botões de ação rápida
+        document.querySelectorAll('[data-target]').forEach(btn => {
+            if (btn.tagName === 'A' || btn.tagName === 'BUTTON') {
+                btn.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        const target = this.getAttribute('data-target');
+                        
+                        // Atualiza a navegação
+                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                        document.querySelector(`.nav-link[data-target="${target}"]`).classList.add('active');
+                        
+                        // Mostra a seção correspondente
+                        document.querySelectorAll('.section').forEach(section => {
+                            section.classList.remove('active');
+                        });
+                        document.getElementById(target).classList.add('active');
+                        
+                        // Scroll suave para o topo
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            }
+        });
+
+        // API para status do servidor
+        const API = "https://api.mcsrvstat.us/2/sd-br6.blazebr.com:29655";
+
+        fetch(API)
+            .then(response => response.json())
+            .then(data => {
+                const statusText = document.getElementById('statusText');
+                const playerCount = document.getElementById('playerCount');
+                const playersList = document.getElementById('players');
+                
+                if (!data.online) {
+                    statusText.textContent = 'Servidor Offline';
+                    statusText.style.color = '#f44336';
+                    playerCount.textContent = 'Servidor indisponível';
+                    playersList.innerHTML = '<li>Servidor offline - nenhum jogador conectado</li>';
+                    return;
+                }
+                
+                statusText.textContent = 'Servidor Online';
+                statusText.style.color = '#4caf50';
+                playerCount.textContent = `${data.players.online} jogadores online`;
+                
+                // Limpa a lista de jogadores
+                playersList.innerHTML = '';
+                
+                if (data.players.list && data.players.list.length > 0) {
+                    data.players.list.forEach(player => {
+                        const li = document.createElement('li');
+                        
+                        // Cria um avatar simples baseado no nome do jogador
+                        const avatar = document.createElement('span');
+                        avatar.className = 'player-avatar';
+                        avatar.style.backgroundColor = `hsl(${player.charCodeAt(0) * 10}, 70%, 50%)`;
+                        
+                        li.appendChild(avatar);
+                        li.appendChild(document.createTextNode(player));
+                        playersList.appendChild(li);
+                    });
+                } else {
+                    playersList.innerHTML = '<li>Nenhum jogador online no momento</li>';
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao carregar dados do servidor:', error);
+                document.getElementById('statusText').textContent = 'Erro ao carregar';
+                document.getElementById('statusText').style.color = '#ff9800';
+            });
+
+        // Efeito de ripple nos botões
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const x = e.clientX - e.target.getBoundingClientRect().left;
+                const y = e.clientY - e.target.getBoundingClientRect().top;
+                
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+    </script>
+</body>
+</html>
