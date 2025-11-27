@@ -676,7 +676,7 @@
             font-size: 12px;
         }
 
-        /* Mobile Menu */
+        /* Mobile Menu - CORRIGIDO */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -685,6 +685,10 @@
             font-size: 24px;
             cursor: pointer;
             padding: 10px;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            z-index: 1001;
         }
 
         .mobile-nav {
@@ -714,6 +718,11 @@
             text-align: center;
             flex: 1;
             margin: 0 5px;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            background: rgba(201, 154, 91, 0.2);
         }
 
         /* Admin Panel - BOTTOM RIGHT */
@@ -870,19 +879,12 @@
                 font-size: 32px;
             }
             
-            nav {
+            nav.desktop-nav {
                 display: none;
             }
 
             .mobile-menu-btn {
                 display: block;
-                position: absolute;
-                right: 20px;
-                top: 20px;
-            }
-            
-            .desktop-nav {
-                display: none;
             }
             
             main {
@@ -923,6 +925,10 @@
 
         @media (min-width: 769px) {
             .mobile-nav {
+                display: none !important;
+            }
+            
+            .mobile-menu-btn {
                 display: none !important;
             }
         }
@@ -1424,14 +1430,33 @@
             window.open(`https://wa.me/5514998199235?text=${encodedMessage}`, '_blank');
         }
 
-        // ========== MOBILE MENU ==========
+        // ========== MOBILE MENU - CORRIGIDO ==========
         document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('mobileNav').classList.toggle('active');
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+            
+            // Fechar outros menus quando abrir o mobile
+            if (mobileNav.classList.contains('active')) {
+                document.getElementById('adminMenu').classList.remove('show');
+                document.getElementById('languageMenu').classList.remove('show');
+                document.getElementById('notificationsPanel').classList.remove('show');
+                document.getElementById('cartContent').classList.remove('show');
+            }
+        });
+
+        // Fechar menu mobile ao clicar em um link
+        document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobileNav').classList.remove('active');
+            });
         });
 
         // ========== ADMIN PANEL ==========
         document.getElementById('adminToggle').addEventListener('click', function() {
             document.getElementById('adminMenu').classList.toggle('show');
+            // Fechar outros menus
+            document.getElementById('languageMenu').classList.remove('show');
+            document.getElementById('mobileNav').classList.remove('active');
         });
 
         // ========== NOTIFICATION SYSTEM ==========
@@ -1442,6 +1467,7 @@
             const panel = document.getElementById('notificationsPanel');
             panel.classList.toggle('show');
             document.getElementById('adminMenu').classList.remove('show');
+            document.getElementById('mobileNav').classList.remove('active');
             
             if (panel.classList.contains('show')) {
                 loadNotifications();
@@ -1493,6 +1519,7 @@
         function showLogin() {
             document.getElementById('loginModal').classList.add('show');
             document.getElementById('adminMenu').classList.remove('show');
+            document.getElementById('mobileNav').classList.remove('active');
         }
 
         function login() {
@@ -1515,6 +1542,7 @@
         // ========== CART TOGGLE ==========
         document.getElementById('cartToggle').addEventListener('click', function() {
             document.getElementById('cartContent').classList.toggle('show');
+            document.getElementById('mobileNav').classList.remove('active');
         });
 
         // ========== NOTIFICATION HELPER ==========
@@ -1686,6 +1714,9 @@
             }
             if (!e.target.closest('.login-modal')) {
                 document.getElementById('loginModal').classList.remove('show');
+            }
+            if (!e.target.closest('.mobile-menu-btn') && !e.target.closest('.mobile-nav')) {
+                document.getElementById('mobileNav').classList.remove('active');
             }
         });
 
