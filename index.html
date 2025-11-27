@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReinadoRPG - Oficial</title>
+    <title>🏰 ReinadoRPG - Oficial</title>
+    <link rel="icon" href="https://cdn.discordapp.com/attachments/1086427908685443193/1443399780981014760/mojangstudios.png?ex=6928ee4c&is=69279ccc&hm=3103826493f96f789b0343d14ed07e9819b0804cf9c1052e16b707d064b6262d" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,6 +19,22 @@
             --success: #4caf50;
             --warning: #ff9800;
             --danger: #f44336;
+            --bg-primary: #1a1612;
+            --bg-secondary: #0f0c08;
+            --text-primary: #f7f3ef;
+            --text-secondary: #c8b9a8;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f7f3ef;
+            --bg-secondary: #e6c9a0;
+            --text-primary: #1a1612;
+            --text-secondary: #3a362f;
+            --glass: rgba(230, 201, 160, 0.7);
+            --dark-bg: #f7f3ef;
+            --darker-bg: #e6c9a0;
+            --text: #1a1612;
+            --text-muted: #3a362f;
         }
         
         * {
@@ -28,11 +45,13 @@
         
         body {
             font-family: 'Cinzel', serif;
-            color: var(--text);
+            color: var(--text-primary);
             background: url('https://static.vecteezy.com/ti/fotos-gratis/t2/54659403-uma-vibrante-e-colorida-minecraft-panorama-adornado-com-adoravel-coelhos-e-lindo-flores-foto.jpg') center/cover fixed no-repeat;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
         }
         
         body::before {
@@ -45,6 +64,10 @@
             background: rgba(10, 8, 5, 0.7);
             z-index: -1;
         }
+
+        [data-theme="light"] body::before {
+            background: rgba(230, 201, 160, 0.7);
+        }
         
         /* Header */
         header {
@@ -54,6 +77,10 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             position: relative;
             z-index: 10;
+        }
+
+        [data-theme="light"] header {
+            background: linear-gradient(180deg, rgba(201, 154, 91, 0.8), rgba(201, 154, 91, 0.4));
         }
         
         header h1 {
@@ -90,6 +117,11 @@
             position: relative;
             overflow: hidden;
         }
+
+        [data-theme="light"] nav a {
+            background: rgba(255,255,255,0.3);
+            color: var(--text-primary);
+        }
         
         nav a:hover {
             background: rgba(201, 154, 91, 0.2);
@@ -121,16 +153,26 @@
         
         .section {
             display: none;
-            animation: fadeIn 0.8s ease;
+            animation: fadeInUp 0.8s ease-out;
         }
         
         .section.active {
             display: block;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: none; }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
         }
         
         .panel {
@@ -178,6 +220,10 @@
             border: 1px solid rgba(201, 154, 91, 0.2);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        [data-theme="light"] .card {
+            background: linear-gradient(135deg, rgba(230, 201, 160, 0.8), rgba(201, 154, 91, 0.8));
         }
         
         .card:hover {
@@ -275,10 +321,18 @@
             align-items: center;
             transition: transform 0.2s;
         }
+
+        [data-theme="light"] .players li {
+            background: rgba(0,0,0,0.05);
+        }
         
         .players li:hover {
             transform: translateX(5px);
             background: rgba(255,255,255,0.08);
+        }
+
+        [data-theme="light"] .players li:hover {
+            background: rgba(0,0,0,0.08);
         }
         
         .player-avatar {
@@ -305,6 +359,10 @@
             border-left: 4px solid var(--accent);
             transition: transform 0.3s;
         }
+
+        [data-theme="light"] .command-item {
+            background: rgba(255,255,255,0.3);
+        }
         
         .command-item:hover {
             transform: translateY(-3px);
@@ -322,6 +380,36 @@
             font-size: 14px;
             color: var(--text-muted);
         }
+
+        /* Search Box */
+        .search-box {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            border-radius: 8px;
+            background: rgba(0,0,0,0.3);
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        [data-theme="light"] .search-box input {
+            background: rgba(255,255,255,0.3);
+            color: var(--text-primary);
+        }
+
+        .search-box::after {
+            content: '🔍';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
         
         /* Seção de loja */
         .kit-grid {
@@ -337,6 +425,10 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
             transition: transform 0.4s, box-shadow 0.4s;
             position: relative;
+        }
+
+        [data-theme="light"] .kit-card {
+            background: linear-gradient(135deg, rgba(230, 201, 160, 0.9), rgba(201, 154, 91, 0.9));
         }
         
         .kit-card:hover {
@@ -448,6 +540,10 @@
             margin-top: 50px;
             border-top: 1px solid rgba(201, 154, 91, 0.2);
         }
+
+        [data-theme="light"] footer {
+            background: rgba(201, 154, 91, 0.6);
+        }
         
         /* Animações extras */
         @keyframes float {
@@ -459,39 +555,315 @@
         .floating {
             animation: float 5s ease-in-out infinite;
         }
-        
-        /* Imagem Mojang Studios */
-        .mojang-logo {
+
+        /* Loading States */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Shopping Cart - EMOJI */
+        .cart-sidebar {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            max-width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 24px;
+        }
+
+        .cart-toggle:hover {
+            background: rgba(201, 154, 91, 0.2);
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: #1a1612;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .cart-content {
+            display: none;
+            margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .cart-content.show {
+            display: block;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid rgba(201, 154, 91, 0.2);
+        }
+
+        .cart-total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--accent);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .remove-item {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            z-index: 1000;
+            border-top: 1px solid rgba(201, 154, 91, 0.3);
+        }
+
+        .mobile-nav.active {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .mobile-nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.3);
+            text-align: center;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        /* Admin Panel - BOTTOM RIGHT */
+        .admin-panel {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 80px;
-            height: 80px;
-            cursor: pointer;
-            transition: all 0.3s ease;
             z-index: 100;
+        }
+
+        .admin-toggle {
+            background: var(--glass);
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            color: var(--text);
+            padding: 12px 16px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            background: rgba(0, 0, 0, 0.3);
-            padding: 5px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+            transition: all 0.3s;
         }
-        
-        .mojang-logo:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+
+        .admin-toggle:hover {
+            background: rgba(201, 154, 91, 0.2);
+            transform: translateY(-2px);
         }
-        
-        .mojang-logo:active {
-            transform: scale(0.95);
+
+        .admin-menu {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: var(--glass);
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            min-width: 180px;
+            backdrop-filter: blur(10px);
         }
-        
-        .mojang-logo img {
+
+        .admin-menu.show {
+            display: block;
+        }
+
+        .theme-toggle, .language-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            padding: 8px 12px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle:hover, .language-toggle:hover {
+            background: rgba(201, 154, 91, 0.2);
+        }
+
+        /* Language Menu */
+        .language-menu {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: var(--glass);
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            min-width: 180px;
+            backdrop-filter: blur(10px);
+        }
+
+        .language-menu.show {
+            display: block;
+        }
+
+        /* Notifications */
+        .notifications-panel {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            z-index: 99;
+            display: none;
+        }
+
+        .notifications-panel.show {
+            display: block;
+        }
+
+        .notification-item {
+            padding: 10px;
+            border-bottom: 1px solid rgba(201, 154, 91, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .notification-form {
+            margin-top: 15px;
+        }
+
+        .notification-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            border-radius: 4px;
+            background: rgba(0,0,0,0.3);
+            color: var(--text);
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        /* Login System */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            border-radius: 6px;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
         }
-        
+
+        .login-modal.show {
+            display: flex;
+        }
+
+        .login-content {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(201, 154, 91, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
             header h1 {
@@ -499,12 +871,18 @@
             }
             
             nav {
-                gap: 10px;
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
             }
             
-            nav a {
-                padding: 8px 15px;
-                font-size: 14px;
+            .desktop-nav {
+                display: none;
             }
             
             main {
@@ -523,26 +901,103 @@
             .row {
                 flex-direction: column;
             }
-            
-            .mojang-logo {
-                width: 60px;
-                height: 60px;
-                bottom: 15px;
-                right: 15px;
+
+            .cart-sidebar {
+                left: 10px;
+                bottom: 10px;
+                max-width: 250px;
+            }
+
+            .admin-panel {
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .notifications-panel {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+                bottom: 70px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-nav {
+                display: none !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Imagem Mojang Studios -->
-    <div class="mojang-logo" id="mojangLogo" title="Clique para recarregar a página">
-        <img src="https://cdn.discordapp.com/attachments/1086427908685443193/1443399780981014760/mojangstudios.png?ex=6928ee4c&is=69279ccc&hm=3103826493f96f789b0343d14ed07e9819b0804cf9c1052e16b707d064b6262d" alt="Mojang Studios">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading" style="width: 50px; height: 50px;"></div>
     </div>
-    
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h3 style="color: var(--accent); margin-bottom: 20px;">Login Administrativo</h3>
+            <input type="text" id="username" placeholder="Digite seu nome de usuário" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid rgba(201, 154, 91, 0.3); border-radius: 8px; background: rgba(0,0,0,0.3); color: var(--text); font-size: 14px;">
+            <button class="btn" onclick="login()" style="width: 100%;">Entrar</button>
+            <p class="muted" style="margin-top: 15px; text-align: center;">Acesso restrito para administradores</p>
+        </div>
+    </div>
+
+    <!-- Admin Panel - BOTTOM RIGHT -->
+    <div class="admin-panel">
+        <button class="admin-toggle" id="adminToggle">⚙️ Opções</button>
+        <div class="admin-menu" id="adminMenu">
+            <button class="theme-toggle" id="themeToggle">🌙 Tema Escuro</button>
+            <button class="language-toggle" onclick="showLanguageMenu()">🌍 Idioma</button>
+            <button class="theme-toggle" onclick="showNotifications()">📢 Notificações</button>
+            <button class="theme-toggle" onclick="showLogin()">🔐 Login Admin</button>
+        </div>
+    </div>
+
+    <!-- Language Menu -->
+    <div class="language-menu" id="languageMenu">
+        <button class="language-toggle" onclick="changeLanguage('pt-BR')">🇧🇷 Português Brasil</button>
+        <button class="language-toggle" onclick="changeLanguage('pt-PT')">🇵🇹 Português Portugal</button>
+        <button class="language-toggle" onclick="changeLanguage('en')">🇺🇸 English</button>
+        <button class="language-toggle" onclick="changeLanguage('es')">🇪🇸 Español</button>
+        <button class="language-toggle" onclick="changeLanguage('ko')">🇰🇷 한국어</button>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <h4 style="color: var(--accent); margin-bottom: 15px;">Notificações</h4>
+        <div id="notificationsList">
+            <!-- Notifications will be loaded here -->
+        </div>
+        <div class="notification-form" id="adminNotificationForm" style="display: none;">
+            <textarea id="newNotification" placeholder="Digite sua notificação..."></textarea>
+            <button class="btn" onclick="addNotification()" style="margin-top: 10px; width: 100%;">Enviar Notificação</button>
+        </div>
+    </div>
+
+    <!-- Shopping Cart with EMOJI -->
+    <div class="cart-sidebar">
+        <button class="cart-toggle" id="cartToggle">
+            🛒
+            <div class="cart-count" id="cartCount">0</div>
+        </button>
+        <div class="cart-content" id="cartContent">
+            <div id="cartItems">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-total">
+                Total: R$ <span id="cartTotal">0,00</span>
+            </div>
+            <button class="btn" onclick="checkout()" style="width: 100%; margin-top: 10px;">Finalizar Compra</button>
+        </div>
+    </div>
+
     <!-- Header -->
     <header>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         <h1 class="floating">ReinadoRPG</h1>
-        <nav>
+        <nav class="desktop-nav">
             <a href="#" class="nav-link active" data-target="home">Início</a>
             <a href="#" class="nav-link" data-target="commands">Comandos</a>
             <a href="#" class="nav-link" data-target="rules">Regras</a>
@@ -550,12 +1005,21 @@
             <a href="#" class="nav-link" data-target="support">Suporte</a>
         </nav>
     </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="#" class="nav-link active" data-target="home">Início</a>
+        <a href="#" class="nav-link" data-target="commands">Comandos</a>
+        <a href="#" class="nav-link" data-target="rules">Regras</a>
+        <a href="#" class="nav-link" data-target="store">Loja</a>
+        <a href="#" class="nav-link" data-target="support">Suporte</a>
+    </nav>
     
     <!-- Conteúdo Principal -->
     <main>
         <!-- Seção Início -->
         <section id="home" class="section active">
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <div class="row">
                     <div class="card">
                         <div class="muted">Java</div>
@@ -582,14 +1046,14 @@
                 </div>
             </div>
             
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Jogadores Online</h2>
                 <ul id="players" class="players">
                     <li>Carregando lista de jogadores...</li>
                 </ul>
             </div>
             
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Sobre o servidor</h2>
                 <p class="muted">Em um passado distante, Eldoria era um paraíso sob a proteção de Aeloryn, o Deus da Luz. Criaturas viviam em harmonia e as raças prosperavam em paz. Porém, a ganância e arrogância de Kael'thas, um ferreiro-mestre, corromperam seu coração. Em busca de poder divino, ele destruiu tudo que tocou, até ser banido por Aeloryn para o Abismo Eterno, Séculos se passaram e a memória do Rei Banido tornou-se lenda. Agora, portais sombrios se abrem por toda Eldoria, e Kael'thas retornou como o Rei Corrompido, determinado a terminar o que começou. Em nosso servidor RPG medieval, você é um dos heróis que deve escolher seu caminho: juntar-se à Ordem da Luz Remanescente, à Aliança de Ferro ou aos Selvagens da Terra para enfrentar esta ameaça épica, Explore um mundo vasto, domine magias antigas, forme clãs e enfrente os Corrompidos em batalhas decisivas. O destino de Eldoria está em suas mãos!</p>
             </div>
@@ -597,162 +1061,23 @@
         
         <!-- Seção Comandos -->
         <section id="commands" class="section">
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Comandos do Servidor</h2>
                 <p class="muted" style="margin-bottom: 20px;">Abaixo estão os principais comandos disponíveis no ReinadoRPG. Use-os para explorar, interagir e aproveitar ao máximo sua experiência no servidor.</p>
                 
-                <div class="command-list">
-                    <div class="command-item">
-                        <div class="command-name">/register (senha) (senha)</div>
-                        <div class="command-desc">Registra sua conta no servidor pela primeira vez.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/login (senha)</div>
-                        <div class="command-desc">Faz login na sua conta quando você entrar no servidor.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/kit</div>
-                        <div class="command-desc">Abre a interface para selecionar e receber kits.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/spawn</div>
-                        <div class="command-desc">Teleporta você de volta para o spawn principal.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/pass</div>
-                        <div class="command-desc">Permite que você pegue o passe gratuito ou premium.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/rtp</div>
-                        <div class="command-desc">Teleporta você para um local aleatório no mundo.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/warp</div>
-                        <div class="command-desc">Abre a lista de locais públicos para onde você pode se teleportar.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/createhome (nome)</div>
-                        <div class="command-desc">Cria um ponto de teleporte (home) na sua localização atual.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/sethome (nome)</div>
-                        <div class="command-desc">Atualiza a localização de uma home existente.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/home (nome)</div>
-                        <div class="command-desc">Teleporta você para a home especificada.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/delhome (nome)</div>
-                        <div class="command-desc">Apaga uma de suas homes.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/g (mensagem)</div>
-                        <div class="command-desc">Envia uma mensagem no chat global.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/tell (jogador) (msg)</div>
-                        <div class="command-desc">Envia uma mensagem privada para outro jogador.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/afk</div>
-                        <div class="command-desc">Marca você como "Ausente" (Away From Keyboard), ou tira a marcação de ausencia.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/sit</div>
-                        <div class="command-desc">Permite que seu personagem se sente no chão.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/ignoreplayer (nome)</div>
-                        <div class="command-desc">Bloqueia todas as mensagens de um jogador específico.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/balance</div>
-                        <div class="command-desc">Mostra quanto dinheiro (money) você possui.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/balancetop</div>
-                        <div class="command-desc">Exibe a lista dos jogadores mais ricos do servidor.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/pay (jogador) (quantia)</div>
-                        <div class="command-desc">Paga uma quantia em dinheiro para outro jogador.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/sell (item) (quantia)</div>
-                        <div class="command-desc">Vende itens do seu inventário.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/sell blocks</div>
-                        <div class="command-desc">Vende blocos.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/clan menu</div>
-                        <div class="command-desc">Abre a interface principal de gerenciamento do seu clã.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/clan invite (jogador)</div>
-                        <div class="command-desc">Convida um jogador para o seu clã.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/clan accept</div>
-                        <div class="command-desc">Aceita um convite para entrar em um clã.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/clan deny</div>
-                        <div class="command-desc">Recusa um convite de clã.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/clan kick (jogador)</div>
-                        <div class="command-desc">Remove um membro do seu clã.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/clan setbase</div>
-                        <div class="command-desc">Define a base (home) do seu clã na sua localização.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/clan base</div>
-                        <div class="command-desc">Teleporta você para a base do seu clã.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/bendinggui</div>
-                        <div class="command-desc">Abre a interface de habilidades e magias.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/level</div>
-                        <div class="command-desc">Exibe seu nível atual e progresso.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/skin menu</div>
-                        <div class="command-desc">Abre o menu para alterar ou customizar sua skin.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/discord</div>
-                        <div class="command-desc">Mostra o link do Discord oficial do servidor.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/claim (nome)</div>
-                        <div class="command-desc">Possivelmente relacionado a proteger seu terreno.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/ping</div>
-                        <div class="command-desc">Testa sua latência (conexão) com o servidor. (Resposta: Pong!)</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/jukebox</div>
-                        <div class="command-desc">Permite tocar músicas com bloco de notas.</div>
-                    </div>
-                    <div class="command-item">
-                        <div class="command-name">/helpop (mensagem)</div>
-                        <div class="command-desc">Envia uma mensagem de ajuda diretamente para a Staff online.</div>
-                    </div>
+                <div class="search-box">
+                    <input type="text" id="commandSearch" placeholder="Buscar comandos...">
+                </div>
+                
+                <div class="command-list" id="commandList">
+                    <!-- Commands will be loaded here by JavaScript -->
                 </div>
             </div>
         </section>
         
         <!-- Seção Regras -->
         <section id="rules" class="section">
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Regras, Leis e Normas</h2>
                 <p class="muted" style="margin-bottom: 20px;">Para garantir uma experiência justa e agradável para todos os jogadores, pedimos que siga estas regras. A violação pode resultar em punições, incluindo banimento permanente.</p>
                 
@@ -783,7 +1108,7 @@
         
         <!-- Seção Loja -->
         <section id="store" class="section">
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Loja de Kits</h2>
                 <p class="muted" style="margin-bottom: 20px;">Adquira kits especiais para melhorar sua experiência no servidor. Cada kit oferece vantagens únicas e itens exclusivos.</p>
                 
@@ -808,75 +1133,75 @@
                                 <li>Pé de coelho e pele de coelho</li>
                                 <li>2 packs (128) de costela de porco</li>
                             </ul>
-                            <a class="btn btn-whatsapp" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar o VIP Cavaleiro do Futuro no valor de R$ 50,00" target="_blank" style="width: 100%;">Comprar Agora</a>
+                            <button class="btn btn-whatsapp" onclick="addToCart('VIP Cavaleiro do Futuro', 50.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Pacotes de Passe</h2>
                 <div class="row">
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">Passe 1 Mês + Tag Bronze</h3>
                         <p class="muted" style="margin-bottom: 15px;">Acesso premium por 1 mês + tag bronze por 7 dias.</p>
                         <div class="big" style="margin-bottom: 15px;">R$ 30,00</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar o Passe 1 Mês no valor de R$ 30,00" target="_blank" style="width: 100%;">Comprar</a>
+                        <button class="btn" onclick="addToCart('Passe 1 Mês + Tag Bronze', 30.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">Passe 5 Meses + Tag Ouro</h3>
                         <p class="muted" style="margin-bottom: 15px;">Acesso premium por 5 meses por 3 meses.</p>
                         <div class="big" style="margin-bottom: 15px;">R$ 150,00</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar o Passe 5 Meses no valor de R$ 150,00" target="_blank" style="width: 100%;">Comprar</a>
+                        <button class="btn" onclick="addToCart('Passe 5 Meses + Tag Ouro', 150.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">Passe 1 Ano + Tag Legendária</h3>
                         <p class="muted" style="margin-bottom: 15px;">Acesso premium por 1 ano + tag legendária permanente.</p>
                         <div class="big" style="margin-bottom: 15px;">R$ 360,00</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar o Passe 1 Ano no valor de R$ 360,00" target="_blank" style="width: 100%;">Comprar</a>
+                        <button class="btn" onclick="addToCart('Passe 1 Ano + Tag Legendária', 360.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                 </div>
             </div>
             
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Desbanimento</h2>
                 <div class="row">
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">Desbanimento</h3>
                         <p class="muted" style="margin-bottom: 15px;">Recupere o acesso ao servidor em caso de banimento.</p>
                         <div class="big" style="margin-bottom: 15px;">R$ 15,00 - Negociável</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de solicitar um desbanimento, no valor de R$15,00" target="_blank" style="width: 100%;">Solicitar Unban</a>
+                        <button class="btn" onclick="addToCart('Desbanimento', 15.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                 </div>
             </div>
             
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Venda de Money</h2>
                 <div class="row">
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">100 BronzeCoins</h3>
                         <div class="big" style="margin-bottom: 15px;">R$ 5,00</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 100 BronzeCoins no valor de R$ 5,00" target="_blank" style="width: 100%;">Comprar</a>
+                        <button class="btn" onclick="addToCart('100 BronzeCoins', 5.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">574 BronzeCoins</h3>
                         <div class="big" style="margin-bottom: 15px;">R$ 23,00</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 574 BronzeCoins no valor de R$ 23,00" target="_blank" style="width: 100%;">Comprar</a>
+                        <button class="btn" onclick="addToCart('574 BronzeCoins', 23.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">1050 BronzeCoins</h3>
                         <div class="big" style="margin-bottom: 15px;">R$ 46,90</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 1050 BronzeCoins no valor de R$ 46,90" target="_blank" style="width: 100%;">Comprar</a>
+                        <button class="btn" onclick="addToCart('1050 BronzeCoins', 46.90)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">2432 BronzeCoins</h3>
                         <div class="big" style="margin-bottom: 15px;">R$ 120,00</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 2432 BronzeCoins no valor de R$ 120,00" target="_blank" style="width: 100%;">Comprar</a>
+                        <button class="btn" onclick="addToCart('2432 BronzeCoins', 120.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                     <div class="card">
                         <h3 style="color: var(--accent); margin-bottom: 10px;">5000 BronzeCoins</h3>
                         <div class="big" style="margin-bottom: 15px;">R$ 345,00</div>
-                        <a class="btn" href="https://wa.me/5514998199235?text=Olá! Gostaria de comprar 5000 BronzeCoins no valor de R$ 345,00" target="_blank" style="width: 100%;">Comprar</a>
+                        <button class="btn" onclick="addToCart('5000 BronzeCoins', 345.00)" style="width: 100%;">Adicionar ao Carrinho</button>
                     </div>
                 </div>
             </div>
@@ -884,7 +1209,7 @@
         
         <!-- Seção Suporte -->
         <section id="support" class="section">
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Suporte</h2>
                 <p class="muted" style="margin-bottom: 20px;">Precisa de ajuda? Entre em contato conosco através dos canais abaixo.</p>
                 
@@ -907,7 +1232,7 @@
                 </div>
             </div>
             
-            <div class="panel">
+            <div class="panel fade-in-up">
                 <h2>Perguntas Frequentes</h2>
                 
                 <div class="rule-item">
@@ -939,6 +1264,286 @@
     </footer>
 
     <script>
+        // ========== LOADING STATES ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 1000);
+        });
+
+        // ========== THEME SYSTEM ==========
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeButton();
+
+        themeToggle.addEventListener('click', function() {
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeButton();
+        });
+
+        function updateThemeButton() {
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            themeToggle.textContent = currentTheme === 'dark' ? '🌙 Tema Escuro' : '🌞 Tema Claro';
+        }
+
+        // ========== LANGUAGE SYSTEM ==========
+        function showLanguageMenu() {
+            document.getElementById('languageMenu').classList.toggle('show');
+            document.getElementById('adminMenu').classList.remove('show');
+        }
+
+        function changeLanguage(lang) {
+            const languages = {
+                'pt-BR': 'Português Brasil selecionado',
+                'pt-PT': 'Português Portugal selecionado', 
+                'en': 'English selected',
+                'es': 'Español seleccionado',
+                'ko': '한국어 선택됨'
+            };
+            
+            showNotification(languages[lang] || 'Idioma alterado');
+            document.getElementById('languageMenu').classList.remove('show');
+            
+            // Aqui você pode adicionar a lógica de tradução real
+            localStorage.setItem('language', lang);
+        }
+
+        // ========== COMMAND SEARCH SYSTEM ==========
+        const commands = [
+            { name: '/register (senha) (senha)', desc: 'Registra sua conta no servidor pela primeira vez.' },
+            { name: '/login (senha)', desc: 'Faz login na sua conta quando você entrar no servidor.' },
+            { name: '/kit', desc: 'Abre a interface para selecionar e receber kits.' },
+            { name: '/spawn', desc: 'Teleporta você de volta para o spawn principal.' },
+            { name: '/pass', desc: 'Permite que você pegue o passe gratuito ou premium.' },
+            { name: '/rtp', desc: 'Teleporta você para um local aleatório no mundo.' },
+            { name: '/warp', desc: 'Abre a lista de locais públicos para onde você pode se teleportar.' },
+            { name: '/createhome (nome)', desc: 'Cria um ponto de teleporte (home) na sua localização atual.' },
+            { name: '/sethome (nome)', desc: 'Atualiza a localização de uma home existente.' },
+            { name: '/home (nome)', desc: 'Teleporta você para a home especificada.' },
+            { name: '/delhome (nome)', desc: 'Apaga uma de suas homes.' },
+            { name: '/g (mensagem)', desc: 'Envia uma mensagem no chat global.' },
+            { name: '/tell (jogador) (msg)', desc: 'Envia uma mensagem privada para outro jogador.' },
+            { name: '/afk', desc: 'Marca você como "Ausente" (Away From Keyboard), ou tira a marcação de ausencia.' },
+            { name: '/sit', desc: 'Permite que seu personagem se sente no chão.' },
+            { name: '/ignoreplayer (nome)', desc: 'Bloqueia todas as mensagens de um jogador específico.' },
+            { name: '/balance', desc: 'Mostra quanto dinheiro (money) você possui.' },
+            { name: '/balancetop', desc: 'Exibe a lista dos jogadores mais ricos do servidor.' },
+            { name: '/pay (jogador) (quantia)', desc: 'Paga uma quantia em dinheiro para outro jogador.' },
+            { name: '/sell (item) (quantia)', desc: 'Vende itens do seu inventário.' },
+            { name: '/sell blocks', desc: 'Vende blocos.' },
+            { name: '/clan menu', desc: 'Abre a interface principal de gerenciamento do seu clã.' },
+            { name: '/clan invite (jogador)', desc: 'Convida um jogador para o seu clã.' },
+            { name: '/clan accept', desc: 'Aceita um convite para entrar em um clã.' },
+            { name: '/clan deny', desc: 'Recusa um convite de clã.' },
+            { name: '/clan kick (jogador)', desc: 'Remove um membro do seu clã.' },
+            { name: '/clan setbase', desc: 'Define a base (home) do seu clã na sua localização.' },
+            { name: '/clan base', desc: 'Teleporta você para a base do seu clã.' },
+            { name: '/bendinggui', desc: 'Abre a interface de habilidades e magias.' },
+            { name: '/level', desc: 'Exibe seu nível atual e progresso.' },
+            { name: '/skin menu', desc: 'Abre o menu para alterar ou customizar sua skin.' },
+            { name: '/discord', desc: 'Mostra o link do Discord oficial do servidor.' },
+            { name: '/claim (nome)', desc: 'Possivelmente relacionado a proteger seu terreno.' },
+            { name: '/ping', desc: 'Testa sua latência (conexão) com o servidor. (Resposta: Pong!)' },
+            { name: '/jukebox', desc: 'Permite tocar músicas com bloco de notas.' },
+            { name: '/helpop (mensagem)', desc: 'Envia uma mensagem de ajuda diretamente para a Staff online.' }
+        ];
+
+        function renderCommands(filter = '') {
+            const commandList = document.getElementById('commandList');
+            const filteredCommands = commands.filter(cmd => 
+                cmd.name.toLowerCase().includes(filter.toLowerCase()) || 
+                cmd.desc.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            commandList.innerHTML = filteredCommands.map(cmd => `
+                <div class="command-item">
+                    <div class="command-name">${cmd.name}</div>
+                    <div class="command-desc">${cmd.desc}</div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('commandSearch').addEventListener('input', function(e) {
+            renderCommands(e.target.value);
+        });
+
+        // Render initial commands
+        renderCommands();
+
+        // ========== SHOPPING CART SYSTEM ==========
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            cartCount.textContent = cart.length;
+            
+            cartItems.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>R$ ${item.price.toFixed(2)}</span>
+                    <button class="remove-item" onclick="removeFromCart(${index})">×</button>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotal.textContent = total.toFixed(2);
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+            showNotification(`${name} adicionado ao carrinho!`);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Carrinho vazio!', 'error');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            const itemsList = cart.map(item => `${item.name} - R$ ${item.price.toFixed(2)}`).join('\n');
+            
+            const message = `Olá! Gostaria de comprar os seguintes itens:\n${itemsList}\n\nTotal: R$ ${total.toFixed(2)}`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            window.open(`https://wa.me/5514998199235?text=${encodedMessage}`, '_blank');
+        }
+
+        // ========== MOBILE MENU ==========
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mobileNav').classList.toggle('active');
+        });
+
+        // ========== ADMIN PANEL ==========
+        document.getElementById('adminToggle').addEventListener('click', function() {
+            document.getElementById('adminMenu').classList.toggle('show');
+        });
+
+        // ========== NOTIFICATION SYSTEM ==========
+        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+        let isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+        function showNotifications() {
+            const panel = document.getElementById('notificationsPanel');
+            panel.classList.toggle('show');
+            document.getElementById('adminMenu').classList.remove('show');
+            
+            if (panel.classList.contains('show')) {
+                loadNotifications();
+            }
+        }
+
+        function loadNotifications() {
+            const list = document.getElementById('notificationsList');
+            const adminForm = document.getElementById('adminNotificationForm');
+            
+            adminForm.style.display = isAdmin ? 'block' : 'none';
+            
+            if (notifications.length === 0) {
+                list.innerHTML = '<p class="muted">Nenhuma notificação ainda.</p>';
+            } else {
+                list.innerHTML = notifications.map(notif => `
+                    <div class="notification-item">
+                        <strong>${notif.date}</strong>
+                        <p>${notif.message}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function addNotification() {
+            if (!isAdmin) return;
+            
+            const message = document.getElementById('newNotification').value.trim();
+            if (!message) return;
+            
+            const notification = {
+                message: message,
+                date: new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR')
+            };
+            
+            notifications.unshift(notification);
+            // Manter apenas as últimas 10 notificações
+            if (notifications.length > 10) {
+                notifications = notifications.slice(0, 10);
+            }
+            
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            document.getElementById('newNotification').value = '';
+            loadNotifications();
+            showNotification('Notificação enviada!');
+        }
+
+        // ========== LOGIN SYSTEM ==========
+        function showLogin() {
+            document.getElementById('loginModal').classList.add('show');
+            document.getElementById('adminMenu').classList.remove('show');
+        }
+
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            
+            // Usuários autorizados
+            const authorizedUsers = ['reinadorpg', 'victinnxp'];
+            
+            if (authorizedUsers.includes(username.toLowerCase())) {
+                isAdmin = true;
+                localStorage.setItem('isAdmin', 'true');
+                document.getElementById('loginModal').classList.remove('show');
+                showNotification('Login realizado com sucesso!');
+                loadNotifications();
+            } else {
+                showNotification('Usuário não autorizado!', 'error');
+            }
+        }
+
+        // ========== CART TOGGLE ==========
+        document.getElementById('cartToggle').addEventListener('click', function() {
+            document.getElementById('cartContent').classList.toggle('show');
+        });
+
+        // ========== NOTIFICATION HELPER ==========
+        function showNotification(message, type = 'success') {
+            // Criar elemento de notificação
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#f44336' : '#4caf50'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                animation: slideInRight 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ========== EXISTING FUNCTIONALITY ==========
         // Navegação entre seções
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -961,6 +1566,9 @@
                 
                 // Scroll suave para o topo
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Fecha menu mobile se estiver aberto
+                document.getElementById('mobileNav').classList.remove('active');
             });
         });
 
@@ -1056,10 +1664,44 @@
             });
         });
 
-        // Recarregar página ao clicar na imagem Mojang
-        document.getElementById('mojangLogo').addEventListener('click', function() {
-            location.reload();
+        // Inicializar carrinho
+        updateCart();
+
+        // Carregar notificações iniciais
+        loadNotifications();
+
+        // Fechar menus ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.admin-panel')) {
+                document.getElementById('adminMenu').classList.remove('show');
+            }
+            if (!e.target.closest('.language-menu') && !e.target.closest('.admin-toggle')) {
+                document.getElementById('languageMenu').classList.remove('show');
+            }
+            if (!e.target.closest('.notifications-panel') && !e.target.closest('.admin-toggle')) {
+                document.getElementById('notificationsPanel').classList.remove('show');
+            }
+            if (!e.target.closest('.cart-sidebar')) {
+                document.getElementById('cartContent').classList.remove('show');
+            }
+            if (!e.target.closest('.login-modal')) {
+                document.getElementById('loginModal').classList.remove('show');
+            }
         });
+
+        // Adicionar CSS para animações de notificação
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: none; opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: none; opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
