@@ -1061,7 +1061,7 @@
             
             <div class="panel fade-in-up">
                 <h2>Sobre o servidor</h2>
-                <p class="muted">Em um passado distante, Eldoria era um paraíso sob a proteção de Aeloryn, o Deus da Luz. Criaturas viviam em harmonia e as raças prosperavam em paz. Porém, a ganância e arrogância de Kael'thas, um ferreiro-mestre, corromperam seu coração. Em busca de poder divino, ele destruiu tudo que tocou, até ser banido por Aeloryn para o Abismo Eterno, Séculos se passaram e a memória do Rei Banido tornou-se lenda. Agora, portais sombrios se abrem por toda Eldoria, e Kael'thas retornou como o Rei Corrompido, determinado a terminar o que começou. Em nosso servidor RPG medieval, você é um dos heróis que deve escolher seu caminho: juntar-se à Ordem da Luz Remanescente, à Aliança de Ferro ou aos Selvagens da Terra para enfrentar esta ameaça épica, Explore um mundo vasto, domine magias antigas, forme clãs e enfrente os Corrompidos em batalhas decisivas. O destino de Eldoria está em suas mãos!</p>
+                <p class="muted">Em um passado distante, Eldoria era um paraíso sob a proteção de Aeloryn, o Deus da Luz. Criaturas vivam em harmonia e as raças prosperavam em paz. Porém, a ganância e arrogância de Kael'thas, um ferreiro-mestre, corromperam seu coração. Em busca de poder divino, ele destruiu tudo que tocou, até ser banido por Aeloryn para o Abismo Eterno, Séculos se passaram e a memória do Rei Banido tornou-se lenda. Agora, portais sombrios se abrem por toda Eldoria, e Kael'thas retornou como o Rei Corrompido, determinado a terminar o que começou. Em nosso servidor RPG medieval, você é um dos heróis que deve escolher seu caminho: juntar-se à Ordem da Luz Remanescente, à Aliança de Ferro ou aos Selvagens da Terra para enfrentar esta ameaça épica, Explore um mundo vasto, domine magias antigas, forme clãs e enfrente os Corrompidos em batalhas decisivas. O destino de Eldoria está em suas mãos!</p>
             </div>
         </section>
         
@@ -1277,29 +1277,36 @@
             }, 1000);
         });
 
-        // ========== THEME SYSTEM ==========
+        // ========== THEME SYSTEM - CORRIGIDO ==========
         const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'dark';
         
+        // Carregar tema salvo
+        let currentTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', currentTheme);
         updateThemeButton();
 
         themeToggle.addEventListener('click', function() {
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            // Alternar entre dark e light
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('theme', currentTheme);
             updateThemeButton();
+            
+            // Fechar menu após seleção
+            document.getElementById('adminMenu').classList.remove('show');
         });
 
         function updateThemeButton() {
-            const currentTheme = localStorage.getItem('theme') || 'dark';
             themeToggle.textContent = currentTheme === 'dark' ? '🌙 Tema Escuro' : '🌞 Tema Claro';
         }
 
-        // ========== LANGUAGE SYSTEM ==========
+        // ========== LANGUAGE SYSTEM - CORRIGIDO ==========
         function showLanguageMenu() {
-            document.getElementById('languageMenu').classList.toggle('show');
-            document.getElementById('adminMenu').classList.remove('show');
+            const languageMenu = document.getElementById('languageMenu');
+            const adminMenu = document.getElementById('adminMenu');
+            
+            languageMenu.classList.toggle('show');
+            adminMenu.classList.remove('show');
         }
 
         function changeLanguage(lang) {
@@ -1314,7 +1321,7 @@
             showNotification(languages[lang] || 'Idioma alterado');
             document.getElementById('languageMenu').classList.remove('show');
             
-            // Aqui você pode adicionar a lógica de tradução real
+            // Salvar idioma selecionado
             localStorage.setItem('language', lang);
         }
 
@@ -1430,7 +1437,7 @@
             window.open(`https://wa.me/5514998199235?text=${encodedMessage}`, '_blank');
         }
 
-        // ========== MOBILE MENU - CORRIGIDO ==========
+        // ========== MOBILE MENU ==========
         document.getElementById('mobileMenuBtn').addEventListener('click', function() {
             const mobileNav = document.getElementById('mobileNav');
             mobileNav.classList.toggle('active');
@@ -1451,15 +1458,17 @@
             });
         });
 
-        // ========== ADMIN PANEL ==========
+        // ========== ADMIN PANEL - CORRIGIDO ==========
         document.getElementById('adminToggle').addEventListener('click', function() {
-            document.getElementById('adminMenu').classList.toggle('show');
+            const adminMenu = document.getElementById('adminMenu');
+            adminMenu.classList.toggle('show');
+            
             // Fechar outros menus
             document.getElementById('languageMenu').classList.remove('show');
             document.getElementById('mobileNav').classList.remove('active');
         });
 
-        // ========== NOTIFICATION SYSTEM ==========
+        // ========== NOTIFICATION SYSTEM - CORRIGIDO ==========
         let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
         let isAdmin = localStorage.getItem('isAdmin') === 'true';
 
@@ -1467,6 +1476,7 @@
             const panel = document.getElementById('notificationsPanel');
             panel.classList.toggle('show');
             document.getElementById('adminMenu').classList.remove('show');
+            document.getElementById('languageMenu').classList.remove('show');
             document.getElementById('mobileNav').classList.remove('active');
             
             if (panel.classList.contains('show')) {
@@ -1515,10 +1525,11 @@
             showNotification('Notificação enviada!');
         }
 
-        // ========== LOGIN SYSTEM ==========
+        // ========== LOGIN SYSTEM - CORRIGIDO ==========
         function showLogin() {
             document.getElementById('loginModal').classList.add('show');
             document.getElementById('adminMenu').classList.remove('show');
+            document.getElementById('languageMenu').classList.remove('show');
             document.getElementById('mobileNav').classList.remove('active');
         }
 
