@@ -460,6 +460,38 @@
             animation: float 5s ease-in-out infinite;
         }
         
+        /* Imagem Mojang Studios */
+        .mojang-logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px;
+        }
+        
+        .mojang-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+        
+        .mojang-logo:active {
+            transform: scale(0.95);
+        }
+        
+        .mojang-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+        
         /* Responsividade */
         @media (max-width: 768px) {
             header h1 {
@@ -491,10 +523,22 @@
             .row {
                 flex-direction: column;
             }
+            
+            .mojang-logo {
+                width: 60px;
+                height: 60px;
+                bottom: 15px;
+                right: 15px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Imagem Mojang Studios -->
+    <div class="mojang-logo" id="mojangLogo" title="Clique para recarregar a página">
+        <img src="https://cdn.discordapp.com/attachments/1086427908685443193/1443399780981014760/mojangstudios.png?ex=6928ee4c&is=69279ccc&hm=3103826493f96f789b0343d14ed07e9819b0804cf9c1052e16b707d064b6262d" alt="Mojang Studios">
+    </div>
+    
     <!-- Header -->
     <header>
         <h1 class="floating">ReinadoRPG</h1>
@@ -1010,6 +1054,11 @@
                     ripple.remove();
                 }, 600);
             });
+        });
+
+        // Recarregar página ao clicar na imagem Mojang
+        document.getElementById('mojangLogo').addEventListener('click', function() {
+            location.reload();
         });
     </script>
 </body>
